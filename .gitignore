@@ -19,7 +19,7 @@
 .env.production.local
 .firebaserc
 
-firebase.json
+
 firestore.indexes.json
 firestore.rules
 
