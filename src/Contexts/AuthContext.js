@@ -7,7 +7,7 @@ const AuthContext = React.createContext()
 export function useAuth() {
     return useContext(AuthContext)
 }
-
+// at 26:48
 export function AuthProvider({children}) {
     const [loading, setLoading] = useState(true)
 
@@ -17,6 +17,29 @@ export function AuthProvider({children}) {
         return auth.createUserWithEmailAndPassword(email, password)
 
     }
+    
+    function login(email, password){
+        return auth.signInWithEmailAndPassword(email, password)
+
+    }
+    
+    function logout(){
+        return auth.signOut()
+
+    }
+    function resetPassword(email) {
+        return auth.sendPasswordResetEmail(email)
+      }
+    
+      function updateEmail(email) {
+        return currentUser.updateEmail(email)
+      }
+    
+      function updatePassword(password) {
+        return currentUser.updatePassword(password)
+      }
+    
+    
 
     //sets user to currentUser inside of useEffect so only runs on component mount
     useEffect(() => {
@@ -31,12 +54,17 @@ export function AuthProvider({children}) {
 
     const value= {
         currentUser,
-        signup
+        signup,
+        login,
+        logout,
+        resetPassword,
+        updateEmail,
+        updatePassword
     }
     
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!loading && children}
         </AuthContext.Provider>
     )
 }
